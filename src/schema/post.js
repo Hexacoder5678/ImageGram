@@ -15,7 +15,7 @@ const postSchema=new mongoose.Schema({
         type:mongoose.Schema.Types>isObjectIdOrHexString,
         ref:"User"
     }
-});
+},{timestamps:true});
 
 const post=mongoose.model("Post",postSchema); //post collection
 

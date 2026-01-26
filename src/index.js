@@ -1,24 +1,41 @@
 import express from 'express';
 import connectDB from './config/dbconfig.js';
+import {createPost} from './controllers/postController.js';
+
+
 const PORT=5000;
 
-const app=express();//crerate express app server instance
+const app=express();//create express app server instance
 
-app.get('/',(req,res)=>{
-    return res.send('Home');
+app.use(express.json());
+app.use(express.text());
+app.use(express.urlencoded());
+
+app.get('/ping/:name',(req,res)=>{
+    const name=req.params.name
+    return res.json({message:'pong'+' '+name});
 });
 
-app.get('/ping',(req,res)=>{
-    return res.json({message:'ping'});
-});
 
-app.get('/hello',(req,res)=>{
-    return res.json({message:'Hello World'});
-});
+app.post('/posts',s3uploader.single('image'),createPost);
 
-app.post('/hello',(req,res)=>{
-    return res.json({message:'Post:Hello World'});
-});
+//middleware:m1,m2,m3
+/*function m1(req,res,next){
+    console.log('m1');
+    next();
+}
+function m2(req,res,next){
+    console.log('m2');
+    next();
+}
+function m3(req,res,next){
+    console.log('m3');
+    next();
+}
+
+app.post('/posts',m1,m2,m3,createPost);
+*/
+
 
 app.listen(PORT,()=>{
     console.log(`Server is running on port ${PORT}`);
