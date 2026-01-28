@@ -7,7 +7,7 @@ export default async function connectDB(){
         console.log('Connected to MongoDB');
     }
     catch(error){
-        console.log("Soemething wet wrong while connecting to MOngoDB");
+        console.log("Soemething went wrong while connecting to MOngoDB");
         console.log(error);
     }
 }

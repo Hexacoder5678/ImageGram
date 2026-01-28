@@ -1,9 +1,9 @@
-import user from '../schema/user';
+import User from '../schema/user.js';
 
 
 export const findUserByEmail=async (email)=>{
     try{
-        const user=await UserActivation.findOne({email});
+        const user=await User.findOne({email});
         return user;
     }
     catch(error){
@@ -11,9 +11,9 @@ export const findUserByEmail=async (email)=>{
     }
 }
 
-export default findAllUsers=aync ()=>{
+export const findAllUsers=async ()=>{
     try{
-        const users=await user.find();
+        const users=await User.find();
         return users;
     }catch(error){
         console.log(error);

@@ -4,7 +4,7 @@ dotenv.config();
 
 export const DB_URL=process.env.DB_URL;
 
-export const AWS_ACCESS_KEY_ID=process.env_AWS_ACCESS_KEY_ID;
+export const AWS_ACCESS_KEY_ID=process.env.AWS_ACCESS_KEY_ID;
 
 export const AWS_SECRET_ACCESS_KEY=process.env.AWS_SECRET_ACCESS_KEY;
 

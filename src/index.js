@@ -1,6 +1,8 @@
 import express from 'express';
 import connectDB from './config/dbconfig.js';
-import {createPost} from './controllers/postController.js';
+//import postRouter from './routers/post.js';
+//import userRouter from './routers/user.js';
+import apiRouter from './routers/apiRouter.js';
 
 
 const PORT=5000;
@@ -9,15 +11,20 @@ const app=express();//create express app server instance
 
 app.use(express.json());
 app.use(express.text());
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended:true}));
+
+//app.use('/posts',postRouter);//if the url has /posts,then use the postRoter to handle the request
+//app.use('/users',userRouter);//if the url starts with /users,then use the userRouter to handle the request
+
+
+app.use('/api',apiRouter);//if the url starts with /api then the request is forwarded to the apiRouter
 
 app.get('/ping/:name',(req,res)=>{
-    const name=req.params.name
+    const name=req.params.name;
     return res.json({message:'pong'+' '+name});
 });
 
 
-app.post('/posts',s3uploader.single('image'),createPost);
 
 //middleware:m1,m2,m3
 /*function m1(req,res,next){
