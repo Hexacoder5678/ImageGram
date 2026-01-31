@@ -10,7 +10,13 @@ import { zodPostSchema } from "../../validators/zodPostSchema.js";
 
 const router=express.Router();//router object to modularize the routes
 
-router.post('/',validate(zodPostSchema),s3uploader.single('image'),createPost);
+router.post(
+  '/',
+  s3uploader.single('image'),   // ✅ multer FIRST
+  validate(zodPostSchema),      // ✅ validation AFTER file exists
+  createPost
+);
+
 
 router.get('/',getAllPosts);
 

@@ -3,11 +3,13 @@ import connectDB from './config/dbconfig.js';
 //import postRouter from './routers/post.js';
 //import userRouter from './routers/user.js';
 import apiRouter from './routers/apiRouter.js';
+import multer from 'multer';
 
 
 const PORT=5000;
 
 const app=express();//create express app server instance
+const upload=multer();
 
 app.use(express.json());
 app.use(express.text());

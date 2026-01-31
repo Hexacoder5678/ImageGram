@@ -11,6 +11,9 @@ export const s3uploader = multer({
     bucket: AWS_BUCKET_NAME,
     contentType: multerS3.AUTO_CONTENT_TYPE,
     key: function (req, file, cb) {
+      if(!file){
+        return cb(new Error("file Not found"));
+      }
       console.log(file);
       const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
       cb(null, file.fieldname + "-" + uniqueSuffix + "." + file.mimetype.split("/")[1]);
