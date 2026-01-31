@@ -4,6 +4,7 @@ import connectDB from './config/dbconfig.js';
 //import userRouter from './routers/user.js';
 import apiRouter from './routers/apiRouter.js';
 import multer from 'multer';
+import { isAuthenticated } from './middlewares/authMiddleware.js';
 
 
 const PORT=5000;
@@ -21,7 +22,10 @@ app.use(express.urlencoded({extended:true}));
 
 app.use('/api',apiRouter);//if the url starts with /api then the request is forwarded to the apiRouter
 
-app.get('/ping/:name',(req,res)=>{
+app.get('/ping',isAuthenticated,(req,res)=>{
+    console.log(req.body);
+    console.log(req.query);
+    console.log(req.user);
     const name=req.params.name;
     return res.json({message:'pong'+' '+name});
 });
