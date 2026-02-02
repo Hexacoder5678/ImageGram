@@ -1,8 +1,8 @@
-import { $Command } from "@aws-sdk/client-s3";
-import { createComment, findCommentById } from "../repositories/commentRepository";
-import { findPostById } from "../repositories/postRepository"
 
-export const createCommentService=async (content,useImperativeHandle,onModel,commentableId)=>{
+import { createComment, findCommentById as findCommentByIdRepo} from "../repositories/commentRepository.js";
+import { findPostById } from "../repositories/postRepository.js"
+
+export const createCommentService=async (content,userId,onModel,commentableId)=>{
     try{
        let parent=await fetchCommentParent(onModel,commentableId);
        if(!parent){
@@ -12,7 +12,7 @@ export const createCommentService=async (content,useImperativeHandle,onModel,com
         }
        }
 
-       const newComment=await createComment(content,useImperativeHandle,onModel,commentableId);
+       const newComment=await createComment(content,userId,onModel,commentableId);
        await addChildCommentToParent(onModel,newComment,parent);
        return newComment;
         }catch(error){
@@ -23,7 +23,22 @@ export const createCommentService=async (content,useImperativeHandle,onModel,com
 
 export const findCommentById=async (id)=>{
     try{
-        const comment=await findCommonById(id);
+        const comment=await findCommentByIdRepo(id);
+        return comment;
+    }catch(error){
+        console.log(error);
+    }
+}
+
+export const findCommentByIdService=async(id)=>{
+    try{
+        const comment=await findCommentById(id);
+        if(!comment){
+            throw{
+                message:"Comment not found",
+                status:404
+            }
+        }
         return comment;
     }catch(error){
         console.log(error);

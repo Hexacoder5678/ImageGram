@@ -1,4 +1,4 @@
-import Comment from "../schema/comment"
+import Comment from "../schema/comment.js"
 
 export const createComment=async (content,userId,onModel,commentableId)=>{
    try{
@@ -11,7 +11,7 @@ export const createComment=async (content,userId,onModel,commentableId)=>{
 
 export const findCommentById=async (id)=>{
     try{
-        const comment=await Comment.findById(id);
+        const comment=await Comment.findById(id).populate('replies');
         return comment;
     }catch(error){
         console.log(error);

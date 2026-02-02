@@ -6,13 +6,23 @@ import apiRouter from './routers/apiRouter.js';
 import multer from 'multer';
 import { isAuthenticated } from './middlewares/authMiddleware.js';
 import ip from 'ip';
+import {rateLimit} from 'express-rate-limit';
 
 
 const PORT=5000;
 
+
+const limiter=rateLimit({
+    windowsMs:0.5*60*1000,//30seconds
+    max:5//limit each IP to 5 requests per windowsMs 
+});
+
+
 const app=express();//create express app server instance
 const upload=multer();
 
+
+app.use(limiter);//apply rate limiter to all requests
 app.use(express.json());
 app.use(express.text());
 app.use(express.urlencoded({extended:true}));

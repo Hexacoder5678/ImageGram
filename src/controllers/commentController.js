@@ -1,4 +1,7 @@
-import { createCommentService } from "../services/commentService";
+import { createCommentService } from "../services/commentService.js";
+import { findCommentByIdService } from "../services/commentService.js";
+
+
 
 
 export  async function createComment(req,res){
@@ -12,6 +15,12 @@ export  async function createComment(req,res){
         });
     }catch(error){
         console.log(error);
+        if(error.status){
+            return res.status(error.status).json({
+               succcess:false,
+               message:error.message
+            })
+        }
         return res.status(500).json({
             success:false,
             message:'Internal Server Error'
@@ -21,7 +30,7 @@ export  async function createComment(req,res){
 
 export async function getCommentById(req,res){
     try{
-       const commentId=req.param.id;
+       const commentId=req.params.id;
        const response=await findCommentByIdService(commentId);
        if(!response){
         return res.status(404).json({
@@ -36,6 +45,12 @@ export async function getCommentById(req,res){
         });
        }catch(error){
         console.log(error);
+        if(error.status){
+            return res.status(error.status).json({
+               succcess:false,
+               message:error.message
+            })
+        }
         return res.status(500).json({
             success:false,
             message:"Internal Server Error"
