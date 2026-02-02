@@ -5,6 +5,7 @@ import connectDB from './config/dbconfig.js';
 import apiRouter from './routers/apiRouter.js';
 import multer from 'multer';
 import { isAuthenticated } from './middlewares/authMiddleware.js';
+import ip from 'ip';
 
 
 const PORT=5000;
@@ -27,7 +28,8 @@ app.get('/ping',isAuthenticated,(req,res)=>{
     console.log(req.query);
     console.log(req.user);
     const name=req.params.name;
-    return res.json({message:'pong'+' '+name});
+    const ipadrr=ip.address();
+    return res.json({message:'pong'+' '+name+ipadrr});
 });
 
 
